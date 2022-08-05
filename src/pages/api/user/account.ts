@@ -12,19 +12,17 @@ export default async function handler(
       case 'GET':
         const { authorization } = req.headers
 
-        await MongoHelper.connect(process.env.MONGODB_URI!)
+        if (!authorization) {
+          return res.status(401).json({ message: 'No Bearer Token is provided'})
+        }
+
+        await MongoHelper.connect(process.env.MONGO_URL!)
         
         const userCollection = await MongoHelper.getCollection('users')
         
         const [_, token] = authorization!.split('Bearer ')
-        
-        if (!token) {
-          return res.status(401).json({ message: 'No Bearer Token is provided'})
-        }
 
         const user = await userCollection.findOne({ accessToken: token })
-
-        console.log(user, token)
 
         if (!user) {
           return res.status(403).json({ message: 'Invalid AccessToken'})

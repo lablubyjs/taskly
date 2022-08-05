@@ -14,19 +14,19 @@ export default async function handler(
         const { authorization } = req.headers
         const { name, email } = req.body
 
-        await MongoHelper.connect(process.env.MONGODB_URI!)
+        if (!authorization) {
+          return res.status(401).json({ message: 'No Bearer Token is provided'})
+        }
+
+        await MongoHelper.connect(process.env.MONGO_URL!)
         
         const userCollection = await MongoHelper.getCollection('users')
         
         const [_, token] = authorization!.split('Bearer ')
 
-        if (!token) {
-          return res.status(401).json({ message: 'No Bearer Token is provided'})
-        }
-
         await jwt.verify(token, process.env.JWT_SECRET!)
-
-        const user = await userCollection.findOneAndUpdate({
+        
+        await userCollection.updateOne({
           accessToken: token,
         }, {
           $set: {
@@ -35,11 +35,13 @@ export default async function handler(
           }
         })
 
+        const user = await userCollection.findOne({ accessToken: token })
+
         if (!user) {
           return res.status(403).json({ message: 'Invalid AccessToken'})
         }
 
-        res.status(200).json({ user: MongoHelper.map(user.value) })
+        res.status(200).json({ user: MongoHelper.map(user) })
         break;
       default:
         res.setHeader('Allow', ['PUT'])
