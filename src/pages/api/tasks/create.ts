@@ -12,38 +12,33 @@ export default async function handler(
     switch (method) {
       case 'POST':
         const { authorization } = req.headers
-        const { userId } = req.query
         const data = req.body
 
-        console.log(typeof userId)
+        if (!authorization) {
+          return res.status(401).json({ message: 'No Bearer Token is provided'})
+        }
 
-        await MongoHelper.connect(process.env.MONGODB_URI!)
+        await MongoHelper.connect(process.env.MONGO_URL!)
         
         const userCollection = await MongoHelper.getCollection('users')
         const taskCollection = await MongoHelper.getCollection('tasks')
         
         const [_, token] = authorization!.split('Bearer ')
         
-        if (!token) {
-          return res.status(401).json({ message: 'No Bearer Token is provided'})
-        }
-
-        const user = await userCollection.findOne({ _id: new ObjectId(userId?.toString()) })
-
-        console.log(user, token)
+        const user = await userCollection.findOne({ accessToken: token })
 
         if (!user) {
           return res.status(403).json({ message: 'Invalid AccessToken'})
         }
 
         const result = await taskCollection.insertOne({
-          userId: new ObjectId(userId?.toString()),
+          userId: user._id,
           ...data
         })
 
         const task = await taskCollection.findOne({ _id: result.insertedId })
 
-        res.status(200).json({ user: MongoHelper.map(task) })
+        res.status(200).json({ task: MongoHelper.map(task) })
         break;
       default:
         res.setHeader('Allow', ['POST'])
