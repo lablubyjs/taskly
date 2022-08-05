@@ -14,13 +14,12 @@ export default async function handler(
       case 'POST':
         const { email, password } = req.body
 
-        await MongoHelper.connect(process.env.MONGODB_URI!)
+        await MongoHelper.connect(process.env.MONGO_URL!)
 
         const userCollection = await MongoHelper.getCollection('users')
 
         const user = await userCollection.findOne({ email: email })
 
-        
         if (!user) {
           return res.status(403).json({ message: 'Invalid credentials'})
         }
@@ -43,7 +42,9 @@ export default async function handler(
           }
         })
 
-        res.status(200).json({ user: MongoHelper.map(user) })
+        const updatedUser = await userCollection.findOne({ email: email })
+
+        res.status(200).json({ user: MongoHelper.map(updatedUser) })
         break;
       default:
         res.setHeader('Allow', ['POST'])

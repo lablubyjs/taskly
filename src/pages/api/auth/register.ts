@@ -14,7 +14,7 @@ export default async function handler(
       case 'POST':
         const { name, email, password } = req.body
 
-        await MongoHelper.connect(process.env.MONGODB_URI!)
+        await MongoHelper.connect(process.env.MONGO_URL!)
 
         const userCollection = await MongoHelper.getCollection('users')
 
@@ -23,9 +23,9 @@ export default async function handler(
         if (existsUser) {
           return res.status(403).json({ message: 'Email is already'})
         }
-
+        
         const hashedPassword = bcrypt.hashSync(password, 12)
-
+        
         const accessToken = await jwt.sign({id: email }, process.env.JWT_SECRET!)
 
         const result = await userCollection.insertOne({
