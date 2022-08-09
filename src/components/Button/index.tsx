@@ -7,7 +7,7 @@ export const Button = (props: Button.Props): JSX.Element => {
 
 export namespace Button {
   export type Props = {
-    width: number
+    width: string
     height: number
     backgroundColor: string
     borderColor?: string

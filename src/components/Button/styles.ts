@@ -6,7 +6,7 @@ export const ButtonContainer = styled.button<Button.Props>`
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    width: ${({width}) => `${width}rem`};
+    width: ${({width}) => `${width}`};
     height: ${({height}) => `${height}rem`};
     border: ${({borderWidth, borderColor}) =>
         borderColor && borderWidth

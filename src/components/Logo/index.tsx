@@ -9,7 +9,7 @@ export const Logo = () => {
       <Button
         backgroundColor={lightTheme.buttonDone}
         height={1.9}
-        width={1.8}
+        width={'1.8rem'}
         borderRadius={'15px 10px 13px 12px'}
         onClick={() => {}}
       >
