@@ -97,43 +97,43 @@ export const Calendar = () => {
     <S.CalendarContainer>
       <S.CalendarHeader>
         <Text fontSize={1.5} fontWeight="regular">{monthName}, {calendarState.year}</Text>
-          <S.ButtonsContainer>
-            <Button
-              backgroundColor={lightTheme.buttonControl}
-              height={1.25}
-              width={1.25}
-              borderRadius={50}
-              onClick={() =>
-                  setCalendarState(decrementWeek(calendarState))
-              }
-            >
-              <ArrowLeft />
-            </Button>
-            <Button
-              backgroundColor={lightTheme.buttonControl}
-              height={1.25}
-              width={1.25}
-              borderRadius={50}
-              onClick={() =>
-                  setCalendarState(incrementWeek(calendarState))
-              }
-            >
-              <ArrowRight />
-            </Button>
-          </S.ButtonsContainer>
-          <S.SelectMode
-            defaultValue={2}
-            onChange={(e) =>
-              setCalendarState(
-                changeIncrement(+e.target.value, calendarState)
-              )
+        <S.ButtonsContainer>
+          <Button
+            backgroundColor={lightTheme.buttonControl}
+            height={1.25}
+            width={1.25}
+            borderRadius={'50%'}
+            onClick={() =>
+                setCalendarState(decrementWeek(calendarState))
             }
           >
-            <option value={1}>Uma Semana</option>
-            <option value={2}>Duas Semanas</option>
-            <option value={3}>Três Semanas</option>
-            <option value={5}>Mês</option>
-          </S.SelectMode>
+            <ArrowLeft />
+          </Button>
+          <Button
+            backgroundColor={lightTheme.buttonControl}
+            height={1.25}
+            width={1.25}
+            borderRadius={'50%'}
+            onClick={() =>
+                setCalendarState(incrementWeek(calendarState))
+            }
+          >
+            <ArrowRight />
+          </Button>
+        </S.ButtonsContainer>
+        <S.SelectMode
+          defaultValue={2}
+          onChange={(e) =>
+            setCalendarState(
+              changeIncrement(+e.target.value, calendarState)
+            )
+          }
+        >
+          <option value={1}>Uma Semana</option>
+          <option value={2}>Duas Semanas</option>
+          <option value={3}>Três Semanas</option>
+          <option value={5}>Mês</option>
+        </S.SelectMode>
       </S.CalendarHeader>
       <S.CalendarBody>
         <thead>

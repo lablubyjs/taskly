@@ -13,5 +13,5 @@ export const ButtonContainer = styled.button<Button.Props>`
         ? `${borderWidth}px solid ${borderColor}`
         : 'none'};
     background-color: ${({backgroundColor}) => backgroundColor};
-    border-radius: ${({borderRadius}) => `${borderRadius}px`};
+    border-radius: ${({borderRadius}) => `${borderRadius}`};
 `;
