@@ -30,8 +30,6 @@ export default async function handler(
           return res.status(403).json({ message: 'Invalid credentials'})
         }
         
-        delete user!.password
-
         const accessToken = await jwt.sign({ id: user.email }, process.env.JWT_SECRET!)
 
         await userCollection.updateOne({
@@ -43,6 +41,8 @@ export default async function handler(
         })
 
         const updatedUser = await userCollection.findOne({ email: email })
+        
+        delete updatedUser!.password
 
         res.status(200).json({ user: MongoHelper.map(updatedUser) })
         break;
