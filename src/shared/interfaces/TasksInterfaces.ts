@@ -2,12 +2,12 @@ export interface ITask {
   id?: string
   userId?: string
   title: string
-	description: string
-	time: string
-	icon: string
-	tag: string
-	date: Date
-	isDone: boolean
+  description: string
+  time: string
+  icon: string
+  tag: string
+  date: Date
+  isDone: boolean
 }
 
 export interface ICreateTask extends ITask {}

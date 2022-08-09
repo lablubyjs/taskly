@@ -5,7 +5,7 @@ import * as S from './styles'
 export const SideMenu = () => {
   return (
     <S.SideMenuContainer>
-      <Logo/>
+      <Logo />
       <Calendar />
     </S.SideMenuContainer>
   )

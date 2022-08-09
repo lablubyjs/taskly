@@ -1,13 +1,13 @@
-import React, {useState} from 'react'
-import {DateMatrix, createDateMatrix} from 'date-matrix'
+import React, { useState } from 'react'
+import { DateMatrix, createDateMatrix } from 'date-matrix'
 
 import ArrowLeft from '../../../public/images/arrow-left.svg'
 import ArrowRight from '../../../public/images/arrow-right.svg'
 
-import {Button} from '../Button'
+import { Button } from '../Button'
 
 import * as S from './styles'
-import {lightTheme, Text} from '@/styles'
+import { lightTheme, Text } from '@/styles'
 
 interface Calendar {
   month: number
@@ -57,12 +57,12 @@ const decrementWeek = (state: Calendar): Calendar => {
     const monthLength = newDateMatrix.weeks.length
 
     return {
-        month: newMonth,
-        year: newYear,
-        minWeek: monthLength - state.increment,
-        maxWeek: monthLength,
-        increment: state.increment,
-        dateMatrix: newDateMatrix,
+      month: newMonth,
+      year: newYear,
+      minWeek: monthLength - state.increment,
+      maxWeek: monthLength,
+      increment: state.increment,
+      dateMatrix: newDateMatrix,
     }
   }
 
@@ -91,21 +91,21 @@ export const Calendar = () => {
     calendarState.year,
     calendarState.month,
     1
-  ).toLocaleDateString('default', {month: 'long'})
+  ).toLocaleDateString('default', { month: 'long' })
 
   return (
     <S.CalendarContainer>
       <S.CalendarHeader>
-        <Text fontSize={1.5} fontWeight="regular">{monthName}, {calendarState.year}</Text>
+        <Text fontSize={1.5} fontWeight="regular">
+          {monthName}, {calendarState.year}
+        </Text>
         <S.ButtonsContainer>
           <Button
             backgroundColor={lightTheme.buttonControl}
             height={1.25}
             width={1.25}
             borderRadius={'50%'}
-            onClick={() =>
-                setCalendarState(decrementWeek(calendarState))
-            }
+            onClick={() => setCalendarState(decrementWeek(calendarState))}
           >
             <ArrowLeft />
           </Button>
@@ -114,9 +114,7 @@ export const Calendar = () => {
             height={1.25}
             width={1.25}
             borderRadius={'50%'}
-            onClick={() =>
-                setCalendarState(incrementWeek(calendarState))
-            }
+            onClick={() => setCalendarState(incrementWeek(calendarState))}
           >
             <ArrowRight />
           </Button>
@@ -124,9 +122,7 @@ export const Calendar = () => {
         <S.SelectMode
           defaultValue={2}
           onChange={(e) =>
-            setCalendarState(
-              changeIncrement(+e.target.value, calendarState)
-            )
+            setCalendarState(changeIncrement(+e.target.value, calendarState))
           }
         >
           <option value={1}>Uma Semana</option>
@@ -137,25 +133,22 @@ export const Calendar = () => {
       </S.CalendarHeader>
       <S.CalendarBody>
         <thead>
-            <tr>
-                {calendarState.dateMatrix.weekdays.map((day) => (
-                    <th key={day}>{day}</th>
-                ))}
-            </tr>
+          <tr>
+            {calendarState.dateMatrix.weekdays.map((day) => (
+              <th key={day}>{day}</th>
+            ))}
+          </tr>
         </thead>
         <tbody>
           {weeks.map((week, index) => (
             <tr key={index}>
               {week.map((day) => {
-                if (
-                  day.date.toString() ===
-                  new Date().toString()
-                ) {
-                    return (
-                      <td className="today" key={day.day}>
-                        {day.day}
-                      </td>
-                    )
+                if (day.date.toString() === new Date().toString()) {
+                  return (
+                    <td className="today" key={day.day}>
+                      {day.day}
+                    </td>
+                  )
                 }
                 return <td key={day.day}>{day.day}</td>
               })}

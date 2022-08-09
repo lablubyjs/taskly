@@ -21,18 +21,21 @@ export default async function handler(
         const existsUser = await userCollection.findOne({ email: email })
 
         if (existsUser) {
-          return res.status(403).json({ message: 'Email is already'})
+          return res.status(403).json({ message: 'Email is already' })
         }
-        
+
         const hashedPassword = bcrypt.hashSync(password, 12)
-        
-        const accessToken = await jwt.sign({id: email }, process.env.JWT_SECRET!)
+
+        const accessToken = await jwt.sign(
+          { id: email },
+          process.env.JWT_SECRET!
+        )
 
         const result = await userCollection.insertOne({
           name,
           email,
           password: hashedPassword,
-          accessToken
+          accessToken,
         })
 
         const user = await userCollection.findOne({ _id: result.insertedId })
@@ -40,11 +43,11 @@ export default async function handler(
         delete user!.password
 
         res.status(200).json({ user: MongoHelper.map(user) })
-        break;
+        break
       default:
         res.setHeader('Allow', ['POST'])
         res.status(405).json({ message: `Method ${method} not Allowed` })
-        break;
+        break
     }
   } catch (error) {
     res.status(500).json({ message: error })

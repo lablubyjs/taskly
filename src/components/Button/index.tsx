@@ -2,11 +2,7 @@ import { MouseEventHandler } from 'react'
 import { ButtonContainer } from './styles'
 
 export const Button = (props: Button.Props): JSX.Element => {
-    return (
-        <ButtonContainer {...props}>
-            {props.children}
-        </ButtonContainer>
-    )
+  return <ButtonContainer {...props}>{props.children}</ButtonContainer>
 }
 
 export namespace Button {
