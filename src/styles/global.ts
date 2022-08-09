@@ -23,6 +23,7 @@ export const GlobalStyle = createGlobalStyle`
 
   button, a {
     cursor: pointer;
+    font-family: inherit;
   }
 
   @media (max-width: 1080px) {
