@@ -3,7 +3,7 @@ import { ILogin, IRegister, IUserResponse } from '@/shared/interfaces'
 import { instance } from '@/shared/services'
 
 export const authServices = (): IAuth => {
-  async function register (data: IRegister): Promise<IUserResponse> {
+  async function registerUser (data: IRegister): Promise<IUserResponse> {
     return instance.post('/auth/register', data)
   }
 
@@ -11,5 +11,5 @@ export const authServices = (): IAuth => {
     return instance.post('/auth/login', data)
   }
 
-  return { register, login }
+  return { registerUser, login }
 }

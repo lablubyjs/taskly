@@ -20,10 +20,10 @@ instance.interceptors.response.use(
 
 instance.interceptors.request.use(
   async (config) => {
-    const { token } = parseCookies()
+    const { accessToken } = parseCookies()
 
-    if (token) {
-      config.headers!.Authorization = `Bearer ${token}`
+    if (accessToken) {
+      config.headers!.Authorization = `Bearer ${accessToken}`
     }
 
     return config
