@@ -1,7 +1,8 @@
-import { IUser } from '@/shared/interfaces'
-import { userServices } from '@/shared/services'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { setCookie, parseCookies } from 'nookies'
+import { parseCookies, setCookie } from 'nookies'
+import { AppState } from '@/store'
+import { ILogin, IUser } from '@/shared/interfaces'
+import { userServices } from '@/shared/services'
 
 type UserSlice = {
   user: IUser
@@ -12,10 +13,17 @@ const { account } = userServices()
 
 const initialUserState = {} as UserSlice
 
+export const addUserAsync = createAsyncThunk<any, IUser>(
+  'user/addUser',
+  async (): Promise<IUser> => {
+    const response = await account()
+    return response.user
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState: initialUserState,
-
 
   reducers: {
     addUser: (state, action: PayloadAction<IUser>) => {
@@ -30,7 +38,7 @@ const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(
-      asyncAddUser.fulfilled, (state, action: PayloadAction<IUser>) => {
+      addUserAsync.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.user = action.payload
         state.isAuthenticated = true
       }
@@ -38,13 +46,6 @@ const userSlice = createSlice({
   }
 })
 
-export const asyncAddUser = createAsyncThunk<any, IUser>(
-  'user/addUser',
-  async () => {
-    const response = await account()
-    return response.user
-  }
-)
-
 export const { addUser } = userSlice.actions
+export const selectUser = (state: AppState) => state.user
 export default userSlice.reducer
