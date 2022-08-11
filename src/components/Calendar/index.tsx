@@ -103,7 +103,7 @@ export const Calendar = () => {
           <Button
             backgroundColor={lightTheme.buttonControl}
             height={1.25}
-            width={1.25}
+            width={'1.25rem'}
             borderRadius={'50%'}
             onClick={() => setCalendarState(decrementWeek(calendarState))}
           >
@@ -112,7 +112,7 @@ export const Calendar = () => {
           <Button
             backgroundColor={lightTheme.buttonControl}
             height={1.25}
-            width={1.25}
+            width={'1.25rem'}
             borderRadius={'50%'}
             onClick={() => setCalendarState(incrementWeek(calendarState))}
           >
