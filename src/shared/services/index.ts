@@ -1,4 +1,5 @@
 export * from './axios.config'
+export * from './axios.client.config'
 export * from './auth'
 export * from './user'
 export * from './tasks'
