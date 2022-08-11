@@ -1,16 +1,15 @@
 import type { AppProps } from 'next/app'
 
-import { darkTheme, GlobalStyle, lightTheme } from '@/styles'
+import { Theme } from '@/components'
 
-import { ThemeProvider } from 'styled-components'
+import { wrapper } from '@/store'
 
-function MyApp ({ Component, pageProps }: AppProps) {
-  return <ThemeProvider theme={lightTheme}>
-    <GlobalStyle />
-
-    <Component {...pageProps} />
-
-  </ThemeProvider>
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <Theme>
+      <Component {...pageProps} />
+    </Theme>
+  )
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp)
