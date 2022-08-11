@@ -11,7 +11,7 @@ import { useAppDispatch } from '@/hooks'
 import { ILogin } from '@/shared/interfaces'
 import { authServices } from '@/shared/services'
 
-import { addUser, selectUser } from '@/store/user-slice'
+import { addUser } from '@/store/slices'
 
 import { FlexColumnContainer, lightTheme, Text } from '@/styles'
 
@@ -38,7 +38,7 @@ const Login: NextPage = () => {
   const loginHandler = async ({ email, password }: ILogin) => {
     try {
       const response = await login({ email, password })
-      await dispatch(addUser(response.user))
+      dispatch(addUser(response.user))
       window.location.href = '/'
     } catch (error) {
       alert(error)
