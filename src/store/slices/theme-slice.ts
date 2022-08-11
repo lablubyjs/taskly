@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AppState } from '@/store'
 
 const initialThemeModeState: string = 'light'
 
@@ -13,4 +14,5 @@ const themeModeSlice = createSlice({
 })
 
 export const { setThemeMode } = themeModeSlice.actions
-export default themeModeSlice.reducer
+export const selectThemeMode = (state: AppState) => state.themeMode
+export const themeMode = themeModeSlice.reducer
