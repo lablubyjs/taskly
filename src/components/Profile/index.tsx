@@ -1,0 +1,41 @@
+import React, { useState } from 'react'
+
+import profile from '@/images/profile.png'
+
+import { Button } from '@/components/Button'
+
+import { useAppSelector } from '@/hooks'
+
+import { selectSettingsTheme, selectUser } from '@/store/slices'
+
+import { Text } from '@/styles'
+import * as S from './styles'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+
+export const Profile = () => {
+  const router = useRouter()
+  const user = useAppSelector(selectUser)
+  const theme = useAppSelector(selectSettingsTheme)
+
+  return (
+    <S.ProfileContainer>
+      <div>
+        <Text fontSize={1.1} fontWeight="700" color={theme.textDark}>
+          {user.name}
+        </Text>
+        <Button
+          backgroundColor="transparent"
+          height={2}
+          width={'auto'}
+          onClick={() => router.push('/settings')}
+        >
+          <Text fontSize={0.8} fontWeight="700" color={theme.textLight}>
+            My settings
+          </Text>
+        </Button>
+      </div>
+      <Image src={profile} width={50} height={50} alt="profile photo" />
+    </S.ProfileContainer>
+  )
+}
