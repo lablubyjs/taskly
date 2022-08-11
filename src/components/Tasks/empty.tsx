@@ -10,7 +10,7 @@ import { selectSettingsTheme } from '@/store/slices'
 import { Text } from '@/styles'
 import * as S from './styles'
 
-const EmptyTasksList = () => {
+export const EmptyTasksList = () => {
   const theme = useAppSelector(selectSettingsTheme)
   const router = useRouter()
 
@@ -37,5 +37,3 @@ const EmptyTasksList = () => {
     </S.EmptyTasksListContainer>
   )
 }
-
-export default EmptyTasksList
