@@ -1,29 +1,31 @@
-import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit'
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from '@reduxjs/toolkit'
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
-import { user, tasks, themeMode } from '@/store/slices'
+
+import { user, tasks, settings } from '@/store/slices'
 
 const combinedReducer = combineReducers({
   user,
   tasks,
-  themeMode
+  settings,
 })
 
 const masterReducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {
     const nextState = {
       ...state,
-      user: {
-        user: action.payload.user.user,
-        isAuthenticated: true
-      },
+      ...action.payload.user.data,
       tasks: {
         list: action.payload.tasks.list.tasks,
-        pinnedTasks: action.payload.tasks.list.tasks
-      },
-      themeMode: action.payload.themeMode || state.themeMode
+        pinnedTasks: [],
+      }
     }
     return nextState
-  } 
+  }
   return combinedReducer(state, action)
 }
 
