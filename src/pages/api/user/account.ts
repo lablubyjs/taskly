@@ -1,5 +1,6 @@
-import { MongoHelper } from '@/db'
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+import { MongoHelper } from '@/db'
 
 export default async function handler(
   req: NextApiRequest,

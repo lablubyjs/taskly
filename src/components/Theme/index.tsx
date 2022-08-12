@@ -2,15 +2,15 @@ import { ThemeProvider } from 'styled-components'
 
 import { useAppSelector } from '@/hooks'
 
-import { selectThemeMode } from '@/store/slices'
+import { selectSettingsTheme } from '@/store/slices'
 
-import { darkTheme, GlobalStyle, lightTheme } from '@/styles'
+import { GlobalStyle } from '@/styles'
 
 export const Theme = ({ children }: Theme.Props) => {
-  const themeMode = useAppSelector(selectThemeMode)
+  const theme = useAppSelector(selectSettingsTheme)
 
   return (
-    <ThemeProvider theme={themeMode === 'light' ? lightTheme : darkTheme}>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       {children}
     </ThemeProvider>

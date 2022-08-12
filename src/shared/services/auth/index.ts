@@ -1,4 +1,5 @@
 import { IAuth } from './interfaces'
+
 import { ILogin, IRegister, IUserResponse } from '@/shared/interfaces'
 import { instance } from '@/shared/services'
 

@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import profile from '@/images/profile.png'
 
@@ -10,8 +12,6 @@ import { selectSettingsTheme, selectUser } from '@/store/slices'
 
 import { Text } from '@/styles'
 import * as S from './styles'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
 
 export const Profile = () => {
   const router = useRouter()

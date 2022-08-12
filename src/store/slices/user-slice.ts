@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { setCookie } from 'nookies'
+
 import { AppState } from '@/store'
+
 import { IUser } from '@/shared/interfaces'
 
 type UserSlice = {
-  user: IUser
+  data: IUser
   isAuthenticated: boolean
 }
 
@@ -16,7 +18,7 @@ const userSlice = createSlice({
 
   reducers: {
     addUser: (state, action: PayloadAction<IUser>) => {
-      state.user = action.payload
+      state.data = action.payload
       state.isAuthenticated = true
       setCookie(null, 'accessToken', action.payload.accessToken, {
         maxAge: 60 * 60 * 5, // 5 hours

@@ -1,56 +1,86 @@
 import React from 'react'
+import { useRouter } from 'next/router'
+
+import Plus from '@/images/plus.svg'
+
+import { Button } from '@/components/Button'
+
 import { useAppSelector } from '@/hooks'
 
-import { selectPinnedTasks } from '@/store/slices'
+import { selectPinnedTasks, selectSettingsTheme } from '@/store/slices'
 
 import { ITask } from '@/shared/interfaces'
 
-import { Card, lightTheme, Text } from '@/styles'
+import { Card, FlexRowContainer, Text } from '@/styles'
 import * as S from './styles'
 
 export const PinnedTasks = () => {
+  const router = useRouter()
   const pinnedTasks = useAppSelector(selectPinnedTasks)
+  const theme = useAppSelector(selectSettingsTheme)
 
-  console.log(pinnedTasks, 'pin')
+  const addPinnedTask = (
+    <Card width="22rem" backgroundColor={theme.background} borderRadius="20px">
+      <FlexRowContainer>
+        <Button
+          backgroundColor={theme.buttonDone}
+          height={3}
+          width={'3rem'}
+          borderRadius={'10px'}
+          onClick={() => router.push('/tasks/list')}
+        >
+          <Plus />
+        </Button>
+        <Text fontSize={1.25} fontWeight="700" color={theme.textDark}>
+          Add new weekly pin
+        </Text>
+      </FlexRowContainer>
+    </Card>
+  )
 
   if (!pinnedTasks.length) {
     return (
-      <S.PinnedTasksContainer>You are not pinned tasks</S.PinnedTasksContainer>
+      <S.PinnedTasksContainer>
+        <Text
+          fontSize={1.5}
+          fontWeight="400"
+          color={theme.textDark}
+          align="center"
+        >
+          You are not pinned tasks
+        </Text>
+        {addPinnedTask}
+      </S.PinnedTasksContainer>
     )
   }
 
   return (
     <S.PinnedTasksContainer>
-      <Text fontSize={1.5} fontWeight="400" color={lightTheme.textDark}>
+      <Text fontSize={1.5} fontWeight="400" color={theme.textDark}>
         Weekly Pinned
       </Text>
       {pinnedTasks.map((task: ITask) => {
-        console.log('rendering')
         return (
           <Card
             width="22rem"
-            backgroundColor={lightTheme.background}
+            backgroundColor={theme.background}
             borderRadius="20px"
             key={task.id}
           >
-            <S.TaskContainer>
+            <S.TaskPinnedContainer>
               <S.TaskEmoji
                 width="3rem"
                 height="3rem"
-                backgroundColor={lightTheme.buttonDone}
+                backgroundColor={theme.buttonDone}
                 borderRadius="10px"
               >
                 🤓
               </S.TaskEmoji>
               <S.TaskContent>
-                <Text
-                  fontSize={1.25}
-                  fontWeight="700"
-                  color={lightTheme.textDark}
-                >
+                <Text fontSize={1.25} fontWeight="700" color={theme.textDark}>
                   {task.title}
                 </Text>
-                <Text fontSize={1} fontWeight="500" color={lightTheme.textDark}>
+                <Text fontSize={1} fontWeight="500" color={theme.textDark}>
                   {new Date(task.date).toLocaleDateString('en-US', {
                     day: 'numeric',
                     month: 'short',
@@ -61,19 +91,16 @@ export const PinnedTasks = () => {
                 </Text>
                 {task.tag && <S.TaskTag>{task.tag}</S.TaskTag>}
                 {task.description && (
-                  <Text
-                    fontSize={0.9}
-                    fontWeight="400"
-                    color={lightTheme.textDark}
-                  >
+                  <Text fontSize={0.9} fontWeight="400" color={theme.textDark}>
                     {task.description}
                   </Text>
                 )}
               </S.TaskContent>
-            </S.TaskContainer>
+            </S.TaskPinnedContainer>
           </Card>
         )
       })}
+      {addPinnedTask}
     </S.PinnedTasksContainer>
   )
 }

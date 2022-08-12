@@ -21,12 +21,11 @@ export const FormContent = styled.form`
 `
 
 export const LabelContent = styled.label`
-  input {
+  input, select {
     width: 25vw;
     height: 3rem;
     outline: none;
     border: none;
-    border-bottom: 2px solid var(--light-grey);
     background-color: transparent;
     vertical-align: middle;
     font-family: inherit;

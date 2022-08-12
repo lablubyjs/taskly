@@ -1,19 +1,20 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
+
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import * as C from '@/components'
 
-import { useAppDispatch } from '@/hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 
 import { ILogin } from '@/shared/interfaces'
 import { authServices } from '@/shared/services'
 
-import { addUser } from '@/store/slices'
+import { addUser, selectSettingsTheme } from '@/store/slices'
 
-import { FlexColumnContainer, lightTheme, Text } from '@/styles'
+import { FlexColumnContainer, Text } from '@/styles'
 
 const loginSchema = yup.object({
   email: yup
@@ -24,6 +25,7 @@ const loginSchema = yup.object({
 })
 
 const Login: NextPage = () => {
+  const theme = useAppSelector(selectSettingsTheme)
   const {
     register,
     handleSubmit,
@@ -50,7 +52,7 @@ const Login: NextPage = () => {
       <FlexColumnContainer>
         <C.Logo />
         <C.Form onSubmit={handleSubmit(loginHandler)}>
-          <Text fontSize={1.5} fontWeight="bold" color={lightTheme.textLight}>
+          <Text fontSize={1.5} fontWeight="bold" color={theme.textLight}>
             Login
           </Text>
           <C.Label error={errors.email}>
@@ -66,16 +68,16 @@ const Login: NextPage = () => {
           <C.Button
             width={'25vw'}
             height={3}
-            backgroundColor={lightTheme.buttonDone}
+            backgroundColor={theme.buttonDone}
             borderRadius={'15px'}
           >
-            <Text fontSize={1} fontWeight="700" color={lightTheme.textDark}>
+            <Text fontSize={1} fontWeight="700" color={theme.textDark}>
               Sign In
             </Text>
           </C.Button>
         </C.Form>
         <Link href="/authentication/register">
-          <Text fontSize={1} fontWeight="500" color={lightTheme.textLight}>
+          <Text fontSize={1} fontWeight="500" color={theme.textLight}>
             Or <strong>sign up</strong>
           </Text>
         </Link>

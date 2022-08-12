@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { DateMatrix, createDateMatrix } from 'date-matrix'
 
-import ArrowLeft from '../../../public/images/arrow-left.svg'
-import ArrowRight from '../../../public/images/arrow-right.svg'
+import ArrowLeft from '@/images/arrow-left.svg'
+import ArrowRight from '@/images/arrow-right.svg'
 
-import { Button } from '../Button'
+import { Button } from '@/components/Button'
 
+import { useAppSelector } from '@/hooks'
+
+import { selectSettingsTheme } from '@/store/slices'
+
+import { Text } from '@/styles'
 import * as S from './styles'
-import { lightTheme, Text } from '@/styles'
 
 interface Calendar {
   month: number
@@ -27,7 +31,7 @@ const changeIncrement = (value: number, state: Calendar): Calendar => {
   }
 }
 
-const incrementWeek = (state: Calendar): Calendar => {
+const incrementWeek = (state: Calendar, matrixOptions: object): Calendar => {
   if (state.maxWeek + state.increment > state.dateMatrix.weeks.length) {
     const newMonth = state.month < 11 ? state.month + 1 : 0
     const newYear = state.month === 11 ? state.year + 1 : state.year
@@ -38,7 +42,7 @@ const incrementWeek = (state: Calendar): Calendar => {
       minWeek: 0,
       maxWeek: state.increment,
       increment: state.increment,
-      dateMatrix: createDateMatrix(new Date(newYear, newMonth, 1)),
+      dateMatrix: createDateMatrix(new Date(newYear, newMonth, 1), matrixOptions),
     }
   }
 
@@ -49,11 +53,11 @@ const incrementWeek = (state: Calendar): Calendar => {
   }
 }
 
-const decrementWeek = (state: Calendar): Calendar => {
+const decrementWeek = (state: Calendar,  matrixOptions: object): Calendar => {
   if (state.minWeek - state.increment < 0) {
     const newMonth = state.month > 0 ? state.month - 1 : 11
     const newYear = state.month === 0 ? state.year - 1 : state.year
-    const newDateMatrix = createDateMatrix(new Date(newYear, newMonth, 1))
+    const newDateMatrix = createDateMatrix(new Date(newYear, newMonth, 1), matrixOptions)
     const monthLength = newDateMatrix.weeks.length
 
     return {
@@ -74,13 +78,15 @@ const decrementWeek = (state: Calendar): Calendar => {
 }
 
 export const Calendar = () => {
+  const theme = useAppSelector(selectSettingsTheme)
+  const dateMatrixOptions = {locale: 'en-US'}
   const [calendarState, setCalendarState] = useState<Calendar>({
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
     minWeek: 0,
     maxWeek: 2,
     increment: 2,
-    dateMatrix: createDateMatrix(new Date()),
+    dateMatrix: createDateMatrix(new Date(), dateMatrixOptions),
   })
 
   const weeks = calendarState.dateMatrix.weeks.slice(
@@ -91,7 +97,7 @@ export const Calendar = () => {
     calendarState.year,
     calendarState.month,
     1
-  ).toLocaleDateString('default', { month: 'long' })
+  ).toLocaleDateString('en-US', { month: 'long' })
 
   return (
     <S.CalendarContainer>
@@ -101,20 +107,20 @@ export const Calendar = () => {
         </Text>
         <S.ButtonsContainer>
           <Button
-            backgroundColor={lightTheme.buttonControl}
+            backgroundColor={theme.buttonControl}
             height={1.25}
             width={'1.25rem'}
             borderRadius={'50%'}
-            onClick={() => setCalendarState(decrementWeek(calendarState))}
+            onClick={() => setCalendarState(decrementWeek(calendarState, dateMatrixOptions))}
           >
             <ArrowLeft />
           </Button>
           <Button
-            backgroundColor={lightTheme.buttonControl}
+            backgroundColor={theme.buttonControl}
             height={1.25}
             width={'1.25rem'}
             borderRadius={'50%'}
-            onClick={() => setCalendarState(incrementWeek(calendarState))}
+            onClick={() => setCalendarState(incrementWeek(calendarState, dateMatrixOptions))}
           >
             <ArrowRight />
           </Button>
@@ -125,10 +131,10 @@ export const Calendar = () => {
             setCalendarState(changeIncrement(+e.target.value, calendarState))
           }
         >
-          <option value={1}>Uma Semana</option>
-          <option value={2}>Duas Semanas</option>
-          <option value={3}>Três Semanas</option>
-          <option value={5}>Mês</option>
+          <option value={1}>One Week</option>
+          <option value={2}>Two Weeks</option>
+          <option value={3}>Three Weeks</option>
+          <option value={5}>Month</option>
         </S.SelectMode>
       </S.CalendarHeader>
       <S.CalendarBody>

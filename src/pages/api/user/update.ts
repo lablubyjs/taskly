@@ -1,6 +1,7 @@
-import { MongoHelper } from '@/db'
-import jwt from 'jsonwebtoken'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import jwt from 'jsonwebtoken'
+
+import { MongoHelper } from '@/db'
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,6 +1,6 @@
-import { MongoHelper } from '@/db'
-import { ObjectId } from 'mongodb'
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+import { MongoHelper } from '@/db'
 
 export default async function handler(
   req: NextApiRequest,
@@ -33,9 +33,14 @@ export default async function handler(
           return res.status(403).json({ message: 'Invalid AccessToken' })
         }
 
+        const insertData = {
+          ...data,
+          date: new Date(data.date),
+        }
+
         const result = await taskCollection.insertOne({
           userId: user._id,
-          ...data,
+          ...insertData,
         })
 
         const task = await taskCollection.findOne({ _id: result.insertedId })

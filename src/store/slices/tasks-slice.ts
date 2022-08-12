@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
 import { AppState } from '@/store'
+
 import { ITask } from '@/shared/interfaces'
 
 type TaskSlice = {
@@ -13,7 +15,7 @@ const initialUserState = {
 } as TaskSlice
 
 const tasksSlice = createSlice({
-  name: 'user',
+  name: 'tasks',
   initialState: initialUserState,
 
   reducers: {

@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react'
+
 import { ButtonContainer } from './styles'
 
 export const Button = (props: Button.Props): JSX.Element => {

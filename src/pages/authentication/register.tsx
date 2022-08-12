@@ -1,19 +1,20 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
+
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import * as C from '@/components'
 
-import { useAppDispatch } from '@/hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 
 import { IRegister } from '@/shared/interfaces'
 import { authServices } from '@/shared/services'
 
-import { addUser } from '@/store/user-slice'
+import { addUser, selectSettingsTheme } from '@/store/slices'
 
-import { FlexColumnContainer, lightTheme, Text } from '@/styles'
+import { FlexColumnContainer, Text } from '@/styles'
 
 const registerUserSchema = yup.object({
   name: yup.string().required('Please enter the name'),
@@ -34,6 +35,7 @@ const Register: NextPage = () => {
   })
 
   const dispatch = useAppDispatch()
+  const theme = useAppSelector(selectSettingsTheme)
   const { registerUser } = authServices()
 
   const registerUserHandler = async ({ name, email, password }: IRegister) => {
@@ -51,7 +53,7 @@ const Register: NextPage = () => {
       <FlexColumnContainer>
         <C.Logo />
         <C.Form onSubmit={handleSubmit(registerUserHandler)}>
-          <Text fontSize={1.5} fontWeight="bold" color={lightTheme.textLight}>
+          <Text fontSize={1.5} fontWeight="bold" color={theme.textLight}>
             Register
           </Text>
           <C.Label error={errors.name}>
@@ -70,16 +72,16 @@ const Register: NextPage = () => {
           <C.Button
             width={'25vw'}
             height={3}
-            backgroundColor={lightTheme.buttonDone}
+            backgroundColor={theme.buttonDone}
             borderRadius={'15px'}
           >
-            <Text fontSize={1} fontWeight="700" color={lightTheme.textDark}>
+            <Text fontSize={1} fontWeight="700" color={theme.textDark}>
               Sign Up
             </Text>
           </C.Button>
         </C.Form>
         <Link href="/authentication/login">
-          <Text fontSize={1} fontWeight="500" color={lightTheme.textLight}>
+          <Text fontSize={1} fontWeight="500" color={theme.textLight}>
             Or <strong>sign in</strong>
           </Text>
         </Link>

@@ -1,13 +1,22 @@
-import { FlexRowContainer, lightTheme, Text } from '@/styles'
 import React from 'react'
-import { Button } from '../Button'
-import Plus from '../../../public/images/plus.svg'
+
+import Plus from '@/images/plus.svg'
+
+import { Button } from '@/components/Button'
+
+import { useAppSelector } from '@/hooks'
+
+import { selectSettingsTheme } from '@/store/slices'
+
+import { FlexRowContainer, Text } from '@/styles'
 
 export const Logo = () => {
+  const theme = useAppSelector(selectSettingsTheme)
+
   return (
     <FlexRowContainer>
       <Button
-        backgroundColor={lightTheme.buttonDone}
+        backgroundColor={theme.buttonDone}
         height={1.9}
         width={'1.8rem'}
         borderRadius={'15px 10px 13px 12px'}
@@ -15,7 +24,7 @@ export const Logo = () => {
       >
         <Plus />
       </Button>
-      <Text fontSize={1.25} fontWeight="700" color={lightTheme.textDark}>
+      <Text fontSize={1.25} fontWeight="700" color={theme.textDark}>
         taskly
       </Text>
     </FlexRowContainer>
