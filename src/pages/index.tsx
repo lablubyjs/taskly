@@ -9,16 +9,28 @@ import { getApiClient } from '@/shared/services'
 import { wrapper } from '@/store'
 import { addUser, addTasks } from '@/store/slices'
 
+import { MainContainer, FlexColumnContainer } from '@/styles'
+
 const Home: NextPage<Home.Props> = (props) => {
   return (
-    <main>
+    <MainContainer>
       <C.SideMenu />
-    </main>
+      <C.TasksList />
+      <FlexColumnContainer>
+        <C.Profile />
+        <C.WeatherWidget
+          city={'Arapiraca'}
+          days={'1'}
+          title={'Arapiraca'}
+        />
+        <C.PomodoroTimerWidget />
+      </FlexColumnContainer>
+    </MainContainer>
   )
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
+  (store: any) => async (context) => {
     const { accessToken } = parseCookies(context)
     const apiClient = getApiClient(context)
 
@@ -40,10 +52,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     return {
       props: {
         user,
-        tasks
-      }
+        tasks,
+      },
     }
-})
+  }
+)
 
 namespace Home {
   export type Props = {
