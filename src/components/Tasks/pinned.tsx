@@ -13,6 +13,7 @@ import { ITask } from '@/shared/interfaces'
 
 import { Card, FlexRowContainer, Text } from '@/styles'
 import * as S from './styles'
+import { dateToLocaleString } from '@/shared/utils'
 
 export const PinnedTasks = () => {
   const router = useRouter()
@@ -81,7 +82,7 @@ export const PinnedTasks = () => {
                   {task.title}
                 </Text>
                 <Text fontSize={1} fontWeight="500" color={theme.textDark}>
-                  {new Date(task.date).toLocaleDateString('en-US', {
+                  {dateToLocaleString(new Date(task.date), 'en-US', {
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric',

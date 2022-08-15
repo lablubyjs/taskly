@@ -13,34 +13,24 @@ import {
   selectSettingsTheme,
 } from '@/store/slices'
 
+import { calculateTime } from '@/shared/utils'
+
 import { Card, Text } from '@/styles'
 import * as S from './styles'
-
-function calculateTimeInSeconds(timeInSeconds: number): (number | string)[] {
-  let hours: number = Math.floor(timeInSeconds / 3600)
-  let minutes: number = Math.floor((timeInSeconds - hours * 3600) / 60)
-  let seconds: number = timeInSeconds - hours * 3600 - minutes * 60
-
-  return [
-    hours < 10 ? `0${hours}` : hours,
-    minutes < 10 ? `0${minutes}` : minutes,
-    seconds < 10 ? `0${seconds}` : seconds,
-  ]
-}
 
 export const PomodoroTimerWidget = () => {
   const theme = useAppSelector(selectSettingsTheme)
   const pomodoroTimer = useAppSelector(selectSettingsPomodoroTimer)
 
-  const [timeInSeconds, setTimeInSeconds] = useState(pomodoroTimer)
-  const [timeArray, setTimeArray] = useState<Array<number | string>>([])
+  const [timeInSeconds, setTimeInSeconds] = useState<number>(pomodoroTimer)
+  const [timeArray, setTimeArray] = useState<string[]>([])
   const [isPlayed, setIsPlayed] = useState<boolean>(false)
   const [intervalId, setIntervalId] = useState<number>(0)
 
   const [hour, minutes, seconds] = timeArray
 
   useEffect(() => {
-    setTimeArray(calculateTimeInSeconds(timeInSeconds))
+    setTimeArray(calculateTime(timeInSeconds))
   }, [timeInSeconds])
 
   const handlePlayButton = () => {
@@ -55,11 +45,6 @@ export const PomodoroTimerWidget = () => {
   const handleStopButton = () => {
     setIsPlayed(false)
     clearInterval(intervalId)
-  }
-
-  const handleReset = () => {
-    clearInterval(intervalId)
-    setTimeInSeconds(0)
   }
 
   return (

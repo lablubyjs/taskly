@@ -12,7 +12,7 @@ export namespace Button {
     height: number
     backgroundColor: string
     borderColor?: string
-    borderWidth?: number
+    borderWidth?: number 
     borderRadius?: string
     children: React.ReactNode
     onClick?: MouseEventHandler<HTMLButtonElement>

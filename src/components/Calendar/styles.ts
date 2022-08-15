@@ -53,12 +53,8 @@ export const CalendarBody = styled.table`
     text-overflow: ellipsis;
   }
 
-  .today,
-  .taskDay {
-    color: ${({ theme }) => theme.textDark};
-  }
-
   .today {
+    color: ${({ theme }) => theme.textDark};
     background-color: ${({ theme }) => theme.buttonDone};
     border-radius: 50%;
   }

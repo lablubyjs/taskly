@@ -12,6 +12,7 @@ import { useAppSelector } from '@/hooks'
 import { selectSettingsTheme, selectTasks } from '@/store/slices'
 
 import { ITask } from '@/shared/interfaces'
+import { dateToLocaleString } from '@/shared/utils'
 
 import { Card, Text } from '@/styles'
 import * as S from './styles'
@@ -28,14 +29,10 @@ export const TasksList = () => {
     (task: ITask) => new Date(task.date).getDate() === currentDate.getDate()
   )
 
-  const formattedDate = currentDate
-    .toLocaleDateString('en-US', {
-      weekday: 'long',
-      day: '2-digit',
-    })
-    .split(' ')
-    .reverse()
-    .join(' ')
+  const formattedDate = dateToLocaleString(currentDate, 'en-US', {
+    weekday: 'long',
+    day: '2-digit',
+  }).replace(/(\d+)( )([a-z]+)/i, '$3$2$1')
 
   return (
     <S.TasksListContainer>
@@ -118,7 +115,7 @@ export const TasksList = () => {
                   {task.title}
                 </Text>
                 <Text fontSize={0.8} fontWeight="500" color={theme.textDark}>
-                  {taskDate.toLocaleString('en-US', {
+                  {dateToLocaleString(taskDate, 'en-US', {
                     hour: '2-digit',
                     minute: '2-digit',
                   })}

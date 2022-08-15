@@ -16,7 +16,7 @@ export const WeatherWidget = ({ city, days, title }: WeatherWidget.Props) => {
   const { getWeather } = weatherServices()
 
   useEffect(() => {
-    const fetchWeather = async () => {
+    (async () => {
       try {
         const response = await getWeather({ city, days })
         setWeather({
@@ -26,8 +26,7 @@ export const WeatherWidget = ({ city, days, title }: WeatherWidget.Props) => {
       } catch (error) {
         console.log(error)
       }
-    }
-    fetchWeather()
+    })()
   }, [city, days])
 
   return (
