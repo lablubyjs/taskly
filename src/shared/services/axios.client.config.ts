@@ -3,7 +3,7 @@ import { parseCookies } from 'nookies'
 
 export const getApiClient = (context: any) => {
   const instance = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'https://taskly-taskly.vercel.app/api',
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
