@@ -13,7 +13,7 @@ import { selectSettingsTheme, selectUser } from '@/store/slices'
 import { Text } from '@/styles'
 import * as S from './styles'
 
-export const Profile = () => {
+export const Profile = (props: Profile.Props) => {
   const router = useRouter()
   const user = useAppSelector(selectUser)
   const theme = useAppSelector(selectSettingsTheme)
@@ -35,7 +35,20 @@ export const Profile = () => {
           </Text>
         </Button>
       </div>
-      <Image src={profile} width={50} height={50} alt="profile photo" />
+      <Button
+        backgroundColor="transparent"
+        height={2}
+        width={'auto'}
+        onClick={() => props.onSetShowModalLogout(true)}
+      >
+        <Image src={profile} width={50} height={50} alt="profile photo" />
+      </Button>
     </S.ProfileContainer>
   )
+}
+
+namespace Profile {
+  export type Props = {
+    onSetShowModalLogout: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
