@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 
+import { toast } from 'react-toastify'
+
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -39,11 +41,14 @@ const Login: NextPage = () => {
 
   const loginHandler = async ({ email, password }: ILogin) => {
     try {
-      const response = await login({ email, password })
+      const response = await toast.promise(login({ email, password }), {
+        pending: 'Loading',
+        success: 'Authentication performed successfully',
+      })
       dispatch(addUser(response.user))
       window.location.href = '/'
-    } catch (error) {
-      alert(error)
+    } catch (error: any) {
+      toast.error(error.message)
     }
   }
 

@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: ${({theme}) => theme.background};
+    background-color: ${({ theme }) => theme.background};
     font-family: 'Nunito', sans-serif;
   }
 
@@ -31,4 +31,20 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 87.5%;
     }
   }
-`;
+
+  @media only screen and (max-width: 480px) {
+    .Toastify__toast-container {
+      width: 70vw;
+      height: 5px;
+      font-size: 13px;
+      padding: 0;
+      left: calc(50% - 4.8rem);
+      margin: 0;
+    }
+
+    .Toastify__toast {
+      min-height: 5px;
+    }
+    
+  }
+`

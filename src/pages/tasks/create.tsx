@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 
+import { toast } from 'react-toastify'
+
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -53,10 +55,13 @@ const Register: NextPage = () => {
         icon: 'icon',
         isDone: false,
       }
-      await create(data)
+      await toast.promise(create(data), {
+        pending: 'Loading',
+        success: 'Successfully add new task',
+      })
       window.location.href = '/'
-    } catch (error) {
-      alert(error)
+    } catch (error: any) {
+      toast.error(error.message)
     }
   }
 
