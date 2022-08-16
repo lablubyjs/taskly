@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { setCookie } from 'nookies'
+import { destroyCookie, setCookie } from 'nookies'
 
 import { AppState } from '@/store'
 
 import { IUser } from '@/shared/interfaces'
+import { Cookies } from 'next/dist/server/web/spec-extension/cookies'
 
 type UserSlice = {
   data: IUser
@@ -24,10 +25,16 @@ const userSlice = createSlice({
         maxAge: 60 * 60 * 5, // 5 hours
         path: '/'
       })
+    },
+
+    removeUser: (state) => {
+      state = initialUserState
+      destroyCookie(null, 'accessToken')
+      console.log('remove user')
     }
   }
 })
 
-export const { addUser } = userSlice.actions
-export const selectUser = (state: AppState) => state.user
+export const { addUser, removeUser } = userSlice.actions
+export const selectUser = (state: AppState): UserSlice['data'] => state.user.data
 export const user = userSlice.reducer

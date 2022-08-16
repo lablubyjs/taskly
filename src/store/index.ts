@@ -33,7 +33,7 @@ export const makeStore = () => {
   return configureStore({ reducer: masterReducer })
 }
 
-export const wrapper = createWrapper(makeStore, { debug: true })
+export const wrapper = createWrapper(makeStore)
 
 const store = makeStore()
 

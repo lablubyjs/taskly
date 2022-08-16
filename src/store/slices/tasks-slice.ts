@@ -32,6 +32,6 @@ const tasksSlice = createSlice({
 })
 
 export const { addTasks, pinnedTask } = tasksSlice.actions
-export const selectTasks = (state: AppState) => state.tasks.list
-export const selectPinnedTasks = (state: AppState) => state.tasks.pinnedTasks
+export const selectTasks = (state: AppState): TaskSlice['list'] => state.tasks.list
+export const selectPinnedTasks = (state: AppState): TaskSlice['pinnedTasks'] => state.tasks.pinnedTasks
 export const tasks = tasksSlice.reducer
