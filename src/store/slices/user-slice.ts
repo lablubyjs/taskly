@@ -4,7 +4,6 @@ import { destroyCookie, setCookie } from 'nookies'
 import { AppState } from '@/store'
 
 import { IUser } from '@/shared/interfaces'
-import { Cookies } from 'next/dist/server/web/spec-extension/cookies'
 
 type UserSlice = {
   data: IUser
@@ -20,7 +19,6 @@ const userSlice = createSlice({
   reducers: {
     addUser: (state, action: PayloadAction<IUser>) => {
       state.data = action.payload
-      state.isAuthenticated = true
       setCookie(null, 'accessToken', action.payload.accessToken, {
         maxAge: 60 * 60 * 5, // 5 hours
         path: '/'
@@ -36,5 +34,5 @@ const userSlice = createSlice({
 })
 
 export const { addUser, removeUser } = userSlice.actions
-export const selectUser = (state: AppState): UserSlice['data'] => state.user.data
+export const selectUser = (state: AppState): UserSlice['data'] => state.user
 export const user = userSlice.reducer
