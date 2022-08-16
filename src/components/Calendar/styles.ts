@@ -15,7 +15,7 @@ export const CalendarHeader = styled.div`
   text-transform: capitalize;
 
   p {
-    flex: 4;
+    flex: 5;
   }
 
   select {

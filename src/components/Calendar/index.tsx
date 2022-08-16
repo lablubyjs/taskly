@@ -25,13 +25,14 @@ import * as S from './styles'
 export const Calendar = () => {
   const theme = useAppSelector(selectSettingsTheme)
   const dateMatrixOptions = { locale: 'en-US' }
+  const today = new Date()
   const [calendarState, setCalendarState] = useState<ICalendar>({
-    month: new Date().getMonth(),
-    year: new Date().getFullYear(),
+    month: today.getMonth(),
+    year: today.getFullYear(),
     minWeek: 0,
     maxWeek: 5,
     increment: 5,
-    dateMatrix: createDateMatrix(new Date(), dateMatrixOptions),
+    dateMatrix: createDateMatrix(today, dateMatrixOptions),
   })
 
   const weeks = sliceDateMatrix(
@@ -99,15 +100,19 @@ export const Calendar = () => {
         <tbody>
           {weeks.map((week, index) => (
             <tr key={index}>
-              {week.map((day) =>
-                day.date.toString() === new Date().toString() ? (
+              {week.map((day) => {
+                const isToday =
+                  day.date.getDate() === today.getDate() &&
+                  day.date.getMonth() === today.getMonth()
+
+                return isToday ? (
                   <td className="today" key={day.day}>
                     {day.day}
                   </td>
                 ) : (
                   <td key={day.day}>{day.day}</td>
                 )
-              )}
+              })}
             </tr>
           ))}
         </tbody>
