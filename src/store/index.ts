@@ -21,7 +21,7 @@ const masterReducer = (state: any, action: any) => {
       ...action.payload.user.data,
       tasks: {
         list: action.payload.tasks.list.tasks,
-        pinnedTasks: [],
+        pinnedTasks: state.tasks.pinnedTasks,
       }
     }
     return nextState
