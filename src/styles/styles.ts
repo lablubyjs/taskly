@@ -23,12 +23,11 @@ export const Text = styled.p<TextProps>`
 
 export const FlexRowContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.8rem;
 `
 
 export const FlexColumnContainer = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   display: flex;
