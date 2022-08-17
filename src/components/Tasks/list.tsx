@@ -19,9 +19,9 @@ import * as S from './styles'
 
 export const TasksList = () => {
   const router = useRouter()
-  const today = new Date()
+  const now = new Date()
 
-  const [currentDate, setCurrentDate] = useState<Date>(today)
+  const [currentDate, setCurrentDate] = useState<Date>(now)
   const tasks = useAppSelector(selectTasks)
   const theme = useAppSelector(selectSettingsTheme)
 
@@ -39,7 +39,7 @@ export const TasksList = () => {
       <S.TasksListHeader>
         <S.TasksListDateContainer>
           <Text fontSize={2.5} fontWeight="500" color={theme.textDark}>
-            {currentDate.toString() === today.toString()
+            {currentDate.toString() === now.toString()
               ? "Today's "
               : 'Tasks '}
             schedule
@@ -88,7 +88,7 @@ export const TasksList = () => {
       <S.TasksList>
         {filteredTasks.map((task: ITask) => {
           const taskDate = new Date(task.date)
-          const taskDone = taskDate <= today
+          const taskDone = now >= taskDate
 
           return (
             <Card
