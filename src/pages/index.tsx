@@ -29,7 +29,7 @@ const Home: NextPage<Home.Props> = (props) => {
       <C.TasksList />
       <FlexColumnContainer>
         <C.Profile onSetShowModalLogout={setShowModalLogout} />
-        <C.WeatherWidget city={'Arapiraca'} days={'1'} title={'Arapiraca'} />
+        <C.WeatherWidget />
         <C.PomodoroTimerWidget />
       </FlexColumnContainer>
       {showModalLogout && (
