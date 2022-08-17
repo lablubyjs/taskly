@@ -35,7 +35,7 @@ export const darkTheme: Theme = {
   buttonControl: '#FFFFFF',
   tagBackground: '#CF8F32',
   textNumber: '#667180',
-  textDark: '#2C2543',
+  textDark: '#979797',
   textLight: '#FFFFFF',
   stroke: '#979797'
 }
