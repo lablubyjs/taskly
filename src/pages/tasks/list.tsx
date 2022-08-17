@@ -16,6 +16,7 @@ const List: NextPage = () => {
     <main>
       <FlexColumnContainer>
         <C.Logo />
+        <C.Weekenly/>
         <Link href="/">
           <Text fontSize={1.25} fontWeight="500" color={theme.textLight}>
             Go back home
