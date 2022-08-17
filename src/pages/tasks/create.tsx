@@ -21,7 +21,7 @@ import { FlexColumnContainer, Text } from '@/styles'
 const createTaskSchema = yup.object({
   title: yup.string().required('Please enter the title'),
   description: yup.string().optional(),
-  date: yup.date().required('Please enter the date'),
+  date: yup.string().required('Please enter the date'),
   time: yup.string().required('Please enter the time'),
   tag: yup.string().required('Please enter the tag'),
 })
@@ -38,7 +38,7 @@ const Register: NextPage = () => {
   const { create } = tasksServices()
   const theme = useAppSelector(selectSettingsTheme)
 
-  const createUserHandler = async ({
+  const createTaskHandler = async ({
     title,
     description,
     time,
@@ -46,12 +46,15 @@ const Register: NextPage = () => {
     date,
   }: CreateTaskFormTypes) => {
     try {
+      const [year, month, day] = date.split('-')
+      const [hour, minutes] = time.split(':')
+      
       const data = {
         title,
         description,
         time,
         tag,
-        date: new Date(date),
+        date: new Date(+year, +month - 1, +day, +hour, +minutes),
         icon: 'icon',
         isDone: false,
       }
@@ -69,7 +72,7 @@ const Register: NextPage = () => {
     <main>
       <FlexColumnContainer>
         <C.Logo />
-        <C.Form onSubmit={handleSubmit(createUserHandler)}>
+        <C.Form onSubmit={handleSubmit(createTaskHandler)}>
           <Text fontSize={1.5} fontWeight="bold" color={theme.textLight}>
             Create new task
           </Text>
