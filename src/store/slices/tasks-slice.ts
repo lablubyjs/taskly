@@ -21,17 +21,20 @@ const tasksSlice = createSlice({
   reducers: {
     addTasks: (state, action: PayloadAction<ITask[]>) => {
       state.list = action.payload
-      state.pinnedTasks = action.payload
     },
 
     pinnedTask: (state, action: PayloadAction<string>) => {
       const [task] = state.list.filter(task => task.id === action.payload)
       state.pinnedTasks = [...state.pinnedTasks, task]
+    },
+
+    unPinnedTask: (state, action: PayloadAction<string>) => {
+      state.pinnedTasks = state.pinnedTasks.filter(task => task.id !== action.payload)
     }
   }
 })
 
-export const { addTasks, pinnedTask } = tasksSlice.actions
+export const { addTasks, pinnedTask, unPinnedTask } = tasksSlice.actions
 export const selectTasks = (state: AppState): TaskSlice['list'] => state.tasks.list
 export const selectPinnedTasks = (state: AppState): TaskSlice['pinnedTasks'] => state.tasks.pinnedTasks
 export const tasks = tasksSlice.reducer
