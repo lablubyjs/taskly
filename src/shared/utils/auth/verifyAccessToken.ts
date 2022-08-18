@@ -12,4 +12,8 @@ export const verifyAccessToken = (context: NextPageContext) => {
       },
     }
   }
+
+  return {
+    props: {}
+  }
 }
