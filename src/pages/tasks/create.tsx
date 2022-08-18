@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import Link from 'next/link'
 
 import { toast } from 'react-toastify'
@@ -15,6 +15,8 @@ import { CreateTaskFormTypes } from '@/shared/interfaces'
 import { tasksServices } from '@/shared/services'
 
 import { selectSettingsTheme } from '@/store/slices'
+
+import { verifyAccessToken } from '@/shared/utils'
 
 import { FlexColumnContainer, Text } from '@/styles'
 
@@ -110,6 +112,10 @@ const Register: NextPage = () => {
       </FlexColumnContainer>
     </main>
   )
+}
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  return verifyAccessToken(context)
 }
 
 export default Register
