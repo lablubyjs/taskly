@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import Link from 'next/link'
 
 import * as C from '@/components'
@@ -6,6 +6,8 @@ import * as C from '@/components'
 import { useAppSelector } from '@/hooks'
 
 import { selectSettingsTheme } from '@/store/slices'
+
+import { verifyAccessToken } from '@/shared/utils'
 
 import { FlexColumnContainer, Text } from '@/styles'
 
@@ -25,6 +27,10 @@ const List: NextPage = () => {
       </FlexColumnContainer>
     </main>
   )
+}
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  return verifyAccessToken(context)
 }
 
 export default List

@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 
 import { useForm } from 'react-hook-form'
@@ -15,7 +15,10 @@ import {
   setSettings,
 } from '@/store/slices'
 
+import { verifyAccessToken } from '@/shared/utils'
+
 import { darkTheme, FlexColumnContainer, lightTheme, Text } from '@/styles'
+
 
 const settingsSchema = yup.object({
   themeMode: yup.string().required('Please enter the theme mode'),
@@ -118,6 +121,10 @@ const Settings: NextPage = () => {
       </FlexColumnContainer>
     </main>
   )
+}
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  return verifyAccessToken(context)
 }
 
 export default Settings
